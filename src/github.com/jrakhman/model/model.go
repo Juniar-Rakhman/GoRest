@@ -2,7 +2,6 @@ package model
 
 import "net/http"
 
-
 // product container
 type ProductList struct {
 	ProductList []Product `json:"Product"`
