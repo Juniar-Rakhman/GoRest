@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"fmt"
-	"github.com/jrakhman/model"
+	"jrakhman/model"
 )
 
 var currentId int

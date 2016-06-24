@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"io/ioutil"
 	"io"
-	"github.com/jrakhman/model"
+	"jrakhman/model"
 )
 
 func Index(w http.ResponseWriter, r *http.Request) {

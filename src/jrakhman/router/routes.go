@@ -1,7 +1,7 @@
 package router
 
 import (
-	"github.com/jrakhman/handlers"
+	"jrakhman/handlers"
 	"net/http"
 )
 

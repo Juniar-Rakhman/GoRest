@@ -2,7 +2,7 @@ package router
 
 import (
 	"github.com/gorilla/mux"
-	"github.com/jrakhman/logger"
+	"jrakhman/logger"
 )
 
 func NewRouter() *mux.Router {
