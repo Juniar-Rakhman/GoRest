@@ -1,0 +1,7 @@
+# Created by .ignore support plugin (hsz.mobi)
+#.gitignore
+#.idea/workspace.xml
+#bin/
+#pkg/
+Would skip repository src/github.com/gorilla/context
+Would skip repository src/github.com/gorilla/mux

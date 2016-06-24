@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="GOPATH &lt;GoRest&gt;">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../cfat_backend/src/golang.org" />
+      <root url="file://$PROJECT_DIR$/../cfat_backend/src/github.com" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <excluded>
+      <root url="file://$PROJECT_DIR$" />
+    </excluded>
+  </library>
+</component>
