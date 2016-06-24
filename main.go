@@ -1,22 +1,12 @@
 package main
 
 import (
-	"fmt"
-	"html"
 	"log"
 	"net/http"
-
-	"github.com/gorilla/mux"
-
+	"github.com/jrakhman/router"
 )
 
 func main() {
-	router := mux.NewRouter().StrictSlash(true)
-
-
-	log.Fatal(http.ListenAndServe(":8080", router))
-}
-
-func Index(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello, %q", html.EscapeString(r.URL.Path))
+	router := router.NewRouter()
+	log.Fatal(http.ListenAndServe(":3000", router))
 }
