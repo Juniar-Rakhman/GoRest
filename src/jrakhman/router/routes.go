@@ -15,6 +15,7 @@ type Route struct {
 type Routes []Route
 
 var routes = Routes{
+	//Product Routes
 	Route{
 		"Index",
 		"GET",
@@ -34,18 +35,6 @@ var routes = Routes{
 		handlers.GetProductById,
 	},
 	Route{
-		"GetProductByCategory",
-		"GET",
-		"/categories/{cat:[0-9]+}",
-		handlers.GetProductByCategory,
-	},
-	Route{
-		"GetProductByPrice",
-		"GET",
-		"/price/{max}/{min}",
-		handlers.GetProductByPrice,
-	},
-	Route{
 		"AddProduct",
 		"POST",
 		"/product",
@@ -57,4 +46,6 @@ var routes = Routes{
 		"/product/{id}",
 		handlers.DelProduct,
 	},
+	//Cart Routes
+
 }
