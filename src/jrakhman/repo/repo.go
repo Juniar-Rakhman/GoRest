@@ -5,6 +5,8 @@ import (
 	"jrakhman/model"
 )
 
+//TODO: Replace this package with proper ORM ?
+
 var currentId int
 
 var productList model.Products
