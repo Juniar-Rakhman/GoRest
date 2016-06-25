@@ -62,5 +62,10 @@ func AddProduct(w http.ResponseWriter, r *http.Request) {
 }
 
 func DelProduct(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id, _ := strconv.Atoi(vars["productId"])
 
+	SetDefaultHeader(w)
+	output := SetFormat(repo.DeleteProduct(id))
+	fmt.Fprintln(w, string(output))
 }

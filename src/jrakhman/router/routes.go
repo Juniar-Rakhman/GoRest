@@ -43,9 +43,14 @@ var routes = Routes{
 	Route{
 		"DelProduct",
 		"DELETE",
-		"/product/{id}",
+		"/product/{productId}",
 		handlers.DelProduct,
 	},
 	//Cart Routes
-
+	//Route{
+	//	"NewCart",
+	//	"GET",
+	//	"/cart/{itemId}",
+	//	handlers.AddItemToNewCart,
+	//}
 }
