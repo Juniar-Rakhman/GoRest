@@ -146,7 +146,7 @@ func DeleteCartItem(w http.ResponseWriter, r *http.Request) {
 	id, _ := strconv.Atoi(vars["itemId"])
 
 	SetDefaultHeader(w, 200)
-	output := SetFormat(repo.DeleteCartItem(id))
+	output := repo.DeleteCartItem(id)
 	fmt.Fprintln(w, string(output))
 }
 
@@ -164,8 +164,9 @@ func SetCartToPaid(w http.ResponseWriter, r *http.Request) {
 func AddDiscount(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id, _ := strconv.Atoi(vars["cartId"])
+	disc, _ := strconv.Atoi(vars["discountCode"])
 
 	SetDefaultHeader(w, 200)
-	output := SetFormat(repo.SetCartToPaid(id))
+	output := SetFormat(repo.AddDiscount(id, disc))
 	fmt.Fprintln(w, string(output))
 }

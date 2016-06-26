@@ -191,7 +191,7 @@ func FindCartByUser(userId int) model.Cart {
 	return c
 }
 
-func DeleteCartItem(itemId int) model.Cart {
+func DeleteCartItem(itemId int) int {
 	db, err := sql.Open(DRIVER, URL)
 	checkErr(err)
 	defer db.Close()
@@ -207,7 +207,7 @@ func DeleteCartItem(itemId int) model.Cart {
 
 	fmt.Println(affect, "rows changed")
 
-	return model.Cart{}
+	return itemId
 }
 
 func SetCartToPaid(userId int) model.Cart {
@@ -231,12 +231,12 @@ func SetCartToPaid(userId int) model.Cart {
 	return c
 }
 
-func AddDiscount(userId int, discount int) model.Cart {
+func AddDiscount(cartId int, discount int) model.Cart {
 	db, err := sql.Open(DRIVER, URL)
 	checkErr(err)
 	defer db.Close()
 
-	c := FindCartByUser(userId)
+	c := FindCartByUser(cartId)
 
 	stmt, err := db.Prepare("update tbl_cart_payment set paid=$1 where id=$2")
 	checkErr(err)
