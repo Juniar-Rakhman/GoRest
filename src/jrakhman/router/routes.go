@@ -62,13 +62,13 @@ var routes = Routes{
 	Route{
 		"AddItemToExistingCart",
 		"POST",
-		"/cart/{cartId}",
+		"/cart/{userId}",
 		handlers.AddItemToExistingCart,
 	},
 	Route{
 		"DeleteItemFromCart",
 		"DELETE",
-		"/cart/{cartId}/{itemId}",
+		"/cart/{userId}/{itemId}",
 		handlers.DeleteItemFromCart,
 	},
 	//Payment Routes

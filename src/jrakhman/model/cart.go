@@ -1,6 +1,7 @@
 package model
 
 type CartItem struct {
+	Id 			int `json:"id"`
 	ProdId  	int `json:"prodId"`
 	Quantity	int `json:"qty"`
 	Price		int `json:"price"`

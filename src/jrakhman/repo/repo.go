@@ -132,14 +132,26 @@ func AddItemToNewCart(user int, ci model.CartItem) model.Cart {
 	return c
 }
 
-func AddItemToExistingCart(user int, ci model.CartItem) model.Cart {
+func AddItemToExistingCart(userId int, ci model.CartItem) model.Cart {
 	db, err := sql.Open(DRIVER, URL)
 	checkErr(err)
 	defer db.Close()
 
+	var lastCartItemId int
 
+	c := FindCartByUser(userId)
 
-	return model.Cart{}
+	//insert cart item
+	err = db.QueryRow("INSERT INTO tbl_cart_items(cart_id, product_id, quantity, price) VALUES($1,$2,$3,$4) returning id;", c.Id, ci.ProdId, ci.Quantity, ci.Price).Scan(&lastCartItemId)
+	checkErr(err)
+
+	println(lastCartItemId)
+
+	fmt.Println("last inserted cart item id =", lastCartItemId)
+
+	c.CartItems = append(c.CartItems, ci)
+
+	return c
 }
 
 func FindCartByUser(userId int) model.Cart {
@@ -161,9 +173,9 @@ func FindCartByUser(userId int) model.Cart {
 	checkErr(err)
 
 	for ciRows.Next() {
-		var id, cart int
+		var cart int
 		ci := model.CartItem{}
-		err = ciRows.Scan(&id, &cart, &ci.ProdId, &ci.Quantity, &ci.Price)
+		err = ciRows.Scan(&ci.Id, &cart, &ci.ProdId, &ci.Quantity, &ci.Price)
 		checkErr(err)
 		c.CartItems = append(c.CartItems, ci)
 	}

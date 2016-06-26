@@ -123,7 +123,13 @@ func AddItemToExistingCart(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	//---- get user id ----//
+	vars := mux.Vars(r)
+	user, _ := strconv.Atoi(vars["userId"])
 
+	SetDefaultHeader(w, 200)
+	output := SetFormat(repo.AddItemToExistingCart(user, cartItem))
+	fmt.Fprintln(w, string(output))
 }
 
 func GetExistingCartByUser(w http.ResponseWriter, r *http.Request) {

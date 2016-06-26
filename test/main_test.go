@@ -6,6 +6,8 @@ import (
 	"testing"
 	"jrakhman/router"
 	"github.com/gorilla/mux"
+	"encoding/json"
+	"bytes"
 )
 
 //Functional testing is covered here. For code coverage testing refer to handlers_test.go
@@ -152,23 +154,48 @@ func setup() {
 //	}
 //}
 
-func TestGetExistingCart(t *testing.T)  {
+//func TestGetExistingCart(t *testing.T)  {
+//	setup()
+//
+//	method := "GET"
+//	urlStr := "/cart/321"
+//
+//	req, err := http.NewRequest(method, urlStr, nil)
+//	if err != nil {
+//		t.Fatal("Creating " + method + " " + urlStr + " request failed!")
+//	}
+//
+//	muxRouter.ServeHTTP(respRec, req)
+//
+//	t.Log("Returned Body: ", respRec.Body)
+//
+//	if respRec.Code != http.StatusOK {
+//		t.Fatal("Server error: Returned ", respRec.Code, " instead of ", http.StatusBadRequest)
+//	}
+//
+//}
+
+func TestAddItemToExistingCart(t *testing.T) {
 	setup()
 
-	method := "GET"
-	urlStr := "/cart/321"
+	method := "POST"
+	urlStr := "/cart/423"
 
-	req, err := http.NewRequest(method, urlStr, nil)
+	postBody := map[string]interface{}{
+		"prodId": 3,
+		"qty": 5,
+		"price":100,
+	}
+
+	body, _ := json.Marshal(postBody)
+	req, err := http.NewRequest(method, urlStr, bytes.NewReader(body))
 	if err != nil {
 		t.Fatal("Creating " + method + " " + urlStr + " request failed!")
 	}
-
 	muxRouter.ServeHTTP(respRec, req)
-
 	t.Log("Returned Body: ", respRec.Body)
 
 	if respRec.Code != http.StatusOK {
-		t.Fatal("Server error: Returned ", respRec.Code, " instead of ", http.StatusBadRequest)
+		t.Fatal("Server error: Returned ", respRec.Code, " instead of ", http.StatusOK)
 	}
-
 }
