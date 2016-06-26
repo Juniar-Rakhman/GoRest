@@ -8,7 +8,7 @@ import (
 	//"time"
 )
 
-//TODO: Replace this package with proper ORM ?
+//TODO: Replace this package with proper ORM ? hmm...slower performance?
 
 const (
 	DRIVER = "postgres"
@@ -79,17 +79,23 @@ func CreateProduct(p model.Product) model.Product {
 	return p
 }
 
-func DeleteProduct(id int) error {
+func DeleteProduct(id int) string {
 	db, err := sql.Open(DRIVER, URL)
 	checkErr(err)
 	defer db.Close()
 
-	stmt, err := db.Prepare("delete from userinfo where uid=$1")
+	stmt, err := db.Prepare("delete from tbl_product where id=$1")
 	checkErr(err)
 
-	_, err = stmt.Exec(id)
+	res, err := stmt.Exec(id)
+	checkErr(err)
 
-	fmt.Println("deleted product id = ", id)
+	affect, err := res.RowsAffected()
+	checkErr(err)
 
-	return err
+	fmt.Println(affect, "rows changed")
+
+	response := "deleted product id = " + string(id)
+
+	return response
 }

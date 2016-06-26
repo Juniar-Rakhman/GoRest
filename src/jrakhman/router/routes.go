@@ -44,7 +44,7 @@ var routes = Routes{
 		"DelProduct",
 		"DELETE",
 		"/product/{productId}",
-		handlers.DelProduct,
+		handlers.DeleteProduct,
 	},
 	//Cart Routes
 	Route{
@@ -90,5 +90,4 @@ var routes = Routes{
 		"/payment/{cartId}/{discountCode}",
 		handlers.AddDiscountCode,
 	},
-}
 }
