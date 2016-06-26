@@ -191,9 +191,24 @@ func FindCartByUser(userId int) model.Cart {
 	return c
 }
 
-//func DeleteCartItem(itemId int) model.Cart {
-//
-//}
+func DeleteCartItem(itemId int) model.Cart {
+	db, err := sql.Open(DRIVER, URL)
+	checkErr(err)
+	defer db.Close()
+
+	stmt, err := db.Prepare("delete from tbl_cart_items where id=$1")
+	checkErr(err)
+
+	res, err := stmt.Exec(itemId)
+	checkErr(err)
+
+	affect, err := res.RowsAffected()
+	checkErr(err)
+
+	fmt.Println(affect, "rows changed")
+
+	return model.Cart{}
+}
 
 func SetCartToPaid(userId int) model.Cart {
 	db, err := sql.Open(DRIVER, URL)
@@ -216,11 +231,28 @@ func SetCartToPaid(userId int) model.Cart {
 	return c
 }
 
-//func AddPromoCode(userId int, discount int) model.Cart {
-//
-//}
+func AddDiscount(userId int, discount int) model.Cart {
+	db, err := sql.Open(DRIVER, URL)
+	checkErr(err)
+	defer db.Close()
 
-func CalculateTotalCost(c *model.Cart) {
+	c := FindCartByUser(userId)
+
+	stmt, err := db.Prepare("update tbl_cart_payment set paid=$1 where id=$2")
+	checkErr(err)
+
+	res, err := stmt.Exec(true, c.Id)
+	checkErr(err)
+
+	affect, err := res.RowsAffected()
+	checkErr(err)
+
+	fmt.Println(affect, "rows changed")
+
+	return c
+}
+
+func CalculateTotalCost(c *model.Cart, disc int) {
 	db, err := sql.Open(DRIVER, URL)
 	checkErr(err)
 	defer db.Close()
@@ -231,7 +263,7 @@ func CalculateTotalCost(c *model.Cart) {
 		totalCost += ci.Price
 	}
 
-	c.Total = totalCost
+	c.Total = totalCost - disc
 
 	stmt, err := db.Prepare("update tbl_cart_payment set total=$1 where id=$2")
 	checkErr(err)
