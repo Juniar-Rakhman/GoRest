@@ -70,11 +70,9 @@ func DeleteProduct(w http.ResponseWriter, r *http.Request) {
 }
 
 //---- Cart Handlers ----//
-
 func AddItemToNewCart(w http.ResponseWriter, r *http.Request) {
 
 	//--- construct cart item ---//
-
 	cartItem := model.CartItem{}
 
 	//limit given json
@@ -105,11 +103,36 @@ func AddItemToNewCart(w http.ResponseWriter, r *http.Request) {
 }
 
 func AddItemToExistingCart(w http.ResponseWriter, r *http.Request) {
+	//--- construct cart item ---//
+	cartItem := model.CartItem{}
+
+	//limit given json
+	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
+	if err != nil {
+		panic(err)
+	}
+
+	if err := r.Body.Close(); err != nil {
+		panic(err)
+	}
+
+	if err := json.Unmarshal(body, &cartItem); err != nil {
+		SetDefaultHeader(w, 422) // unprocessable entity
+		if err := json.NewEncoder(w).Encode(err); err != nil {
+			panic(err)
+		}
+	}
+
 
 }
 
 func GetExistingCart(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id, _ := strconv.Atoi(vars["cartId"])
 
+	SetDefaultHeader(w, 200)
+	output := SetFormat(repo.FindCart(id))
+	fmt.Fprintln(w, string(output))
 }
 
 func DeleteItemFromCart(w http.ResponseWriter, r *http.Request) {

@@ -121,13 +121,54 @@ func AddItemToNewCart(user int, ci model.CartItem) model.Cart {
 	fmt.Println("last inserted cart id=", lastCartId)
 	c.Id = lastCartId
 
-	c.CartItems.CartItems = append(c.CartItems.CartItems, ci)
+	c.CartItems = append(c.CartItems, ci)
 
 	//insert cart item
 	err = db.QueryRow("INSERT INTO tbl_cart_items(cart_id, product_id, quantity) VALUES($1,$2,$3) returning id;", lastCartId, ci.ProdId, ci.Quantity).Scan(&lastCartItemId)
 	checkErr(err)
 
 	fmt.Println("last inserted cart item id =", lastCartItemId)
+
+	return c
+}
+
+func AddItemToExistingCart(user int, ci model.CartItem) model.Cart {
+	db, err := sql.Open(DRIVER, URL)
+	checkErr(err)
+	defer db.Close()
+
+	return model.Cart{}
+}
+
+func FindCart(cartId int) model.Cart {
+	db, err := sql.Open(DRIVER, URL)
+	checkErr(err)
+	defer db.Close()
+
+	c := model.Cart{}
+	cRows, err := db.Query("SELECT * FROM tbl_cart_payment where id=$1", cartId)
+	checkErr(err)
+
+	var test int
+
+	for cRows.Next() {
+		//should be only 1
+		err = cRows.Scan(&c.Id, &c.Total, &c.Discount, &c.Paid, &c.UserId)
+		checkErr(err)
+	}
+
+	fmt.Println(test)
+
+	ciRows, err := db.Query("SELECT * FROM tbl_cart_items where cart_id=$1", cartId)
+	checkErr(err)
+
+	for ciRows.Next() {
+		var id int
+		ci := model.CartItem{}
+		err = ciRows.Scan(&id, &ci.ProdId, &ci.Quantity, &ci.Price)
+		checkErr(err)
+		c.CartItems = append(c.CartItems, ci)
+	}
 
 	return c
 }

@@ -12,10 +12,5 @@ type Cart struct {
 	Total		int `json:"total"`
 	Discount 	int `json:"discount"`
 	Paid 		bool `json:"paid"`
-	CartItems   CartItems `json:"cartItems"`
-}
-
-//cart items container
-type CartItems struct {
-	CartItems []CartItem `json:"items"`
+	CartItems   []CartItem  `json:"cartItems"`
 }
