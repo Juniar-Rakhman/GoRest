@@ -6,7 +6,7 @@ type CartItem struct {
 	Price		int `json:"price"`
 }
 
-type Cart struct {
+type Cart struct {	//we should have 1 cart = 1 user
 	Id  		int `json:"id"`
 	UserId 		int `json:"user"`
 	Total		int `json:"total"`

@@ -56,8 +56,8 @@ var routes = Routes{
 	Route{
 		"GetExistingCart",
 		"GET",
-		"/cart/{cartId}",
-		handlers.GetExistingCart,
+		"/cart/{userId}",
+		handlers.GetExistingCartByUser,
 	},
 	Route{
 		"AddItemToExistingCart",

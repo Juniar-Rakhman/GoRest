@@ -131,7 +131,7 @@ func setup() {
 //	setup()
 //
 //	method := "POST"
-//	urlStr := "/cart/new/123"
+//	urlStr := "/cart/new/423"
 //
 //	postBody := map[string]interface{}{
 //		"prodId": 3,
@@ -156,7 +156,7 @@ func TestGetExistingCart(t *testing.T)  {
 	setup()
 
 	method := "GET"
-	urlStr := "/cart/5"
+	urlStr := "/cart/321"
 
 	req, err := http.NewRequest(method, urlStr, nil)
 	if err != nil {
