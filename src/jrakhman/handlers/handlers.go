@@ -12,6 +12,10 @@ import (
 	"jrakhman/repo"
 )
 
+/*
+	This package responsible for logic handling of cart and product requests
+*/
+
 func Index(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, "Welcome to GoRestAPI!")
 }
@@ -68,6 +72,35 @@ func DeleteProduct(w http.ResponseWriter, r *http.Request) {
 //---- Cart Handlers ----//
 
 func AddItemToNewCart(w http.ResponseWriter, r *http.Request) {
+
+	//--- construct cart item ---//
+
+	cartItem := model.CartItem{}
+
+	//limit given json
+	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
+	if err != nil {
+		panic(err)
+	}
+
+	if err := r.Body.Close(); err != nil {
+		panic(err)
+	}
+
+	if err := json.Unmarshal(body, &cartItem); err != nil {
+		SetDefaultHeader(w, 422) // unprocessable entity
+		if err := json.NewEncoder(w).Encode(err); err != nil {
+			panic(err)
+		}
+	}
+
+	//---- get user id ----//
+	vars := mux.Vars(r)
+	user, _ := strconv.Atoi(vars["userId"])
+
+	SetDefaultHeader(w, 200)
+	output := SetFormat(repo.AddItemToNewCart(user, cartItem))
+	fmt.Fprintln(w, string(output))
 
 }
 

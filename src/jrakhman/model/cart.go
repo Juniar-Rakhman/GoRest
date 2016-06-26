@@ -1,19 +1,21 @@
 package model
 
 type CartItem struct {
-	ProdId  	int `json:"productId"`
-	Quantity	int `json:"productQty"`
+	ProdId  	int `json:"prodId"`
+	Quantity	int `json:"qty"`
+	Price		int `json:"price"`
 }
 
 type Cart struct {
 	Id  		int `json:"id"`
 	UserId 		int `json:"user"`
-	CartItems   []CartItem `json:"cartItems"`
-}
-
-type CartPayment struct {
 	Total		int `json:"total"`
 	Discount 	int `json:"discount"`
 	Paid 		bool `json:"paid"`
-	Cart		Cart `json:"cart"`
+	CartItems   CartItems `json:"cartItems"`
+}
+
+//cart items container
+type CartItems struct {
+	CartItems []CartItem `json:"items"`
 }

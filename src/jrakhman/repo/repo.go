@@ -99,3 +99,35 @@ func DeleteProduct(id int) string {
 
 	return response
 }
+
+func AddItemToNewCart(user int, ci model.CartItem) model.Cart {
+	db, err := sql.Open(DRIVER, URL)
+	checkErr(err)
+	defer db.Close()
+
+	var lastCartItemId int
+	var lastCartId int
+
+	c := model.Cart{}
+	c.UserId = user
+	c.Total = ci.Price
+	c.Discount = 0
+	c.Paid = false
+
+	//insert cart
+	err = db.QueryRow("INSERT INTO tbl_cart_payment(user_id, total, discount, paid) VALUES($1,$2,$3,$4) returning id;", c.UserId, c.Total, c.Discount, c.Paid).Scan(&lastCartId)
+	checkErr(err)
+
+	fmt.Println("last inserted cart id=", lastCartId)
+	c.Id = lastCartId
+
+	c.CartItems.CartItems = append(c.CartItems.CartItems, ci)
+
+	//insert cart item
+	err = db.QueryRow("INSERT INTO tbl_cart_items(cart_id, product_id, quantity) VALUES($1,$2,$3) returning id;", lastCartId, ci.ProdId, ci.Quantity).Scan(&lastCartItemId)
+	checkErr(err)
+
+	fmt.Println("last inserted cart item id =", lastCartItemId)
+
+	return c
+}

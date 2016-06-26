@@ -47,17 +47,17 @@ var routes = Routes{
 		handlers.DeleteProduct,
 	},
 	//Cart Routes
+	Route{	//will send cartItem json
+		"AddItemToNewCart",
+		"POST",
+		"/cart/new/{userId}",
+		handlers.AddItemToNewCart,
+	},
 	Route{
 		"GetExistingCart",
 		"GET",
 		"/cart/{cartId}",
 		handlers.GetExistingCart,
-	},
-	Route{
-		"AddItemToNewCart",
-		"POST",
-		"/cart/new",
-		handlers.AddItemToNewCart,
 	},
 	Route{
 		"AddItemToExistingCart",

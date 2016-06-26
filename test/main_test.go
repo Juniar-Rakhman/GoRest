@@ -24,79 +24,124 @@ func setup() {
 	respRec = httptest.NewRecorder()
 }
 
-func TestGetIndex(t *testing.T) {
-	setup()
+//func TestGetIndex(t *testing.T) {
+//	setup()
+//
+//	method := "GET"
+//	urlStr := "/"
+//
+//	req, err := http.NewRequest(method, urlStr, nil)
+//	if err != nil {
+//		t.Fatal("Creating " + method + " " + urlStr + " request failed!")
+//	}
+//
+//	muxRouter.ServeHTTP(respRec, req)
+//
+//	t.Log("Returned Body: ", respRec.Body)
+//
+//	if respRec.Code != http.StatusOK {
+//		t.Fatal("Server error: Returned ", respRec.Code, " instead of ", http.StatusBadRequest)
+//	}
+//}
+//
+//func TestGetProductAll(t *testing.T) {
+//	setup()
+//
+//	method := "GET"
+//	urlStr := "/product"
+//
+//	req, err := http.NewRequest(method, urlStr, nil)
+//	if err != nil {
+//		t.Fatal("Creating " + method + " " + urlStr + " request failed!")
+//	}
+//
+//	muxRouter.ServeHTTP(respRec, req)
+//
+//	t.Log("Returned Body: ", respRec.Body)
+//
+//	if respRec.Code != http.StatusOK {
+//		t.Fatal("Server error: Returned ", respRec.Code, " instead of ", http.StatusBadRequest)
+//	}
+//}
+//
+//func TestGetProductId(t *testing.T) {
+//	setup()
+//
+//	method := "GET"
+//	urlStr := "/product/1"
+//
+//	req, err := http.NewRequest(method, urlStr, nil)
+//	if err != nil {
+//		t.Fatal("Creating " + method + " " + urlStr + " request failed!")
+//	}
+//
+//	muxRouter.ServeHTTP(respRec, req)
+//
+//	t.Log("Returned Body: ", respRec.Body)
+//
+//	if respRec.Code != http.StatusOK {
+//		t.Fatal("Server error: Returned ", respRec.Code, " instead of ", http.StatusBadRequest)
+//	}
+//}
+//
+//func TestAddProduct(t *testing.T) {
+//	setup()
+//
+//	method := "POST"
+//	urlStr := "/product"
+//
+//	postBody := map[string]interface{}{
+//		"Name": "Testing3",
+//		"Size": 99,
+//		"Color":"magenta",
+//		"Price":100,
+//	}
+//	body, _ := json.Marshal(postBody)
+//	req, err := http.NewRequest(method, urlStr, bytes.NewReader(body))
+//	if err != nil {
+//		t.Fatal("Creating " + method + " " + urlStr + " request failed!")
+//	}
+//	muxRouter.ServeHTTP(respRec, req)
+//	t.Log("Returned Body: ", respRec.Body)
+//
+//	if respRec.Code != http.StatusCreated {
+//		t.Fatal("Server error: Returned ", respRec.Code, " instead of ", http.StatusCreated)
+//	}
+//}
+//
+//func TestDeleteProduct(t *testing.T) {
+//	setup()
+//
+//	method := "DELETE"
+//	urlStr := "/product/10"
+//
+//	req, err := http.NewRequest(method, urlStr, nil)
+//	if err != nil {
+//		t.Fatal("Creating " + method + " " + urlStr + " request failed!")
+//	}
+//
+//	muxRouter.ServeHTTP(respRec, req)
+//
+//	t.Log("Returned Body: ", respRec.Body)
+//
+//	if respRec.Code != http.StatusOK {
+//		t.Fatal("Server error: Returned ", respRec.Code, " instead of ", http.StatusOK)
+//	}
+//}
 
-	method := "GET"
-	urlStr := "/"
-
-	req, err := http.NewRequest(method, urlStr, nil)
-	if err != nil {
-		t.Fatal("Creating " + method + " " + urlStr + " request failed!")
-	}
-
-	muxRouter.ServeHTTP(respRec, req)
-
-	t.Log("Returned Body: ", respRec.Body)
-
-	if respRec.Code != http.StatusOK {
-		t.Fatal("Server error: Returned ", respRec.Code, " instead of ", http.StatusBadRequest)
-	}
-}
-
-func TestGetProductAll(t *testing.T) {
-	setup()
-
-	method := "GET"
-	urlStr := "/product"
-
-	req, err := http.NewRequest(method, urlStr, nil)
-	if err != nil {
-		t.Fatal("Creating " + method + " " + urlStr + " request failed!")
-	}
-
-	muxRouter.ServeHTTP(respRec, req)
-
-	t.Log("Returned Body: ", respRec.Body)
-
-	if respRec.Code != http.StatusOK {
-		t.Fatal("Server error: Returned ", respRec.Code, " instead of ", http.StatusBadRequest)
-	}
-}
-
-func TestGetProductId(t *testing.T) {
-	setup()
-
-	method := "GET"
-	urlStr := "/product/1"
-
-	req, err := http.NewRequest(method, urlStr, nil)
-	if err != nil {
-		t.Fatal("Creating " + method + " " + urlStr + " request failed!")
-	}
-
-	muxRouter.ServeHTTP(respRec, req)
-
-	t.Log("Returned Body: ", respRec.Body)
-
-	if respRec.Code != http.StatusOK {
-		t.Fatal("Server error: Returned ", respRec.Code, " instead of ", http.StatusBadRequest)
-	}
-}
-
-func TestAddProduct(t *testing.T) {
+func TestAddItemToNewCart(t *testing.T) {
 	setup()
 
 	method := "POST"
-	urlStr := "/product"
+	urlStr := "/cart/new/123"
 
-	mcPostBody := map[string]interface{}{
-		"Name": "Testing3",
-		"Size": 99,
-		"Color":"magenta",
+	postBody := map[string]interface{}{
+		"ProdId": 3,
+		"Quantity": 99,
 		"Price":100,
 	}
-	body, _ := json.Marshal(mcPostBody)
+
+	body, _ := json.Marshal(postBody)
 	req, err := http.NewRequest(method, urlStr, bytes.NewReader(body))
 	if err != nil {
 		t.Fatal("Creating " + method + " " + urlStr + " request failed!")
@@ -104,28 +149,7 @@ func TestAddProduct(t *testing.T) {
 	muxRouter.ServeHTTP(respRec, req)
 	t.Log("Returned Body: ", respRec.Body)
 
-	if respRec.Code != http.StatusCreated {
-		t.Fatal("Server error: Returned ", respRec.Code, " instead of ", http.StatusCreated)
-	}
-}
-
-func TestDeleteProduct(t *testing.T) {
-	setup()
-
-	method := "DELETE"
-	urlStr := "/product/10"
-
-	req, err := http.NewRequest(method, urlStr, nil)
-	if err != nil {
-		t.Fatal("Creating " + method + " " + urlStr + " request failed!")
-	}
-
-	muxRouter.ServeHTTP(respRec, req)
-
-	t.Log("Returned Body: ", respRec.Body)
-
 	if respRec.Code != http.StatusOK {
-		t.Fatal("Server error: Returned ", respRec.Code, " instead of ", http.StatusBadRequest)
+		t.Fatal("Server error: Returned ", respRec.Code, " instead of ", http.StatusOK)
 	}
 }
-
