@@ -141,16 +141,23 @@ func GetExistingCartByUser(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, string(output))
 }
 
-func DeleteItemFromCart(w http.ResponseWriter, r *http.Request) {
-
+func DeleteCartItem(w http.ResponseWriter, r *http.Request) {
+	//vars := mux.Vars(r)
+	//id, _ := strconv.Atoi(vars["itemId"])
+	//
+	//SetDefaultHeader(w, 200)
+	//output := SetFormat(repo.DeleteCartItem(id))
+	//fmt.Fprintln(w, string(output))
 }
 
 //---- Payment Handlers ----//
-func GetPaymentDetails(w http.ResponseWriter, r *http.Request) {
-
-}
-
 func SetCartToPaid(w http.ResponseWriter, r *http.Request) {
+	//vars := mux.Vars(r)
+	//id, _ := strconv.Atoi(vars["userId"])
+	//
+	//SetDefaultHeader(w, 200)
+	////output := SetFormat(repo.SetCartToPaid(id))
+	//fmt.Fprintln(w, string(output))
 
 }
 

@@ -68,16 +68,10 @@ var routes = Routes{
 	Route{
 		"DeleteItemFromCart",
 		"DELETE",
-		"/cart/{userId}/{itemId}",
-		handlers.DeleteItemFromCart,
+		"/cart/item/{itemId}",
+		handlers.DeleteCartItem,
 	},
 	//Payment Routes
-	Route{
-		"GetPaymentDetails",
-		"GET",
-		"/payment/{cartId}",
-		handlers.GetPaymentDetails,
-	},
 	Route{
 		"SetCartToPaid",
 		"POST",

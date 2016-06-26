@@ -24,7 +24,7 @@ func TestIndex_Ok(t *testing.T) {
 	}
 
 	if w.Body.String() != "{ &#39;msg&#39;:&#39;Welcome to GoRest&#39; }" {
-		t.Errorf("Should have had a hello world. Body: %v", w.Body.String())
+		t.Errorf("Should have had a Welcome to GoRest. Body: %v", w.Body.String())
 	}
 }
 
