@@ -157,7 +157,7 @@ func AddItemToExistingCart(userId int, ci model.CartItem) model.Cart {
 
 	c.CartItems = append(c.CartItems, ci)
 
-	CalculateTotalCost(&c)
+	CalculateTotalCost(&c, 0)
 
 	return c
 }
