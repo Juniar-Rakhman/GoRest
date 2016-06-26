@@ -17,7 +17,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetProductAll(w http.ResponseWriter, r *http.Request) {
-	SetDefaultHeader(w)
+	SetDefaultHeader(w, 200)
 	output := SetFormat(repo.FindAll())
 	fmt.Fprintln(w, string(output))
 }
@@ -26,7 +26,7 @@ func GetProductById(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id, _ := strconv.Atoi(vars["productId"])
 
-	SetDefaultHeader(w)
+	SetDefaultHeader(w, 200)
 	output := SetFormat(repo.FindProduct(id))
 	fmt.Fprintln(w, string(output))
 }
@@ -36,7 +36,6 @@ func AddProduct(w http.ResponseWriter, r *http.Request) {
 
 	//limit given json
 	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
-
 	if err != nil {
 		panic(err)
 	}
@@ -46,26 +45,53 @@ func AddProduct(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := json.Unmarshal(body, &prod); err != nil {
-		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-		w.WriteHeader(422) // unprocessable entity
+		SetDefaultHeader(w, 422) // unprocessable entity
 		if err := json.NewEncoder(w).Encode(err); err != nil {
 			panic(err)
 		}
 	}
 
-	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	w.WriteHeader(http.StatusCreated)
-
-	if err := json.NewEncoder(w).Encode(repo.CreateProduct(prod)); err != nil {
-		panic(err)
-	}
+	SetDefaultHeader(w, http.StatusCreated)
+	output := SetFormat(repo.CreateProduct(prod))
+	fmt.Fprintln(w, string(output))
 }
 
 func DelProduct(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id, _ := strconv.Atoi(vars["productId"])
 
-	SetDefaultHeader(w)
+	SetDefaultHeader(w, 200)
 	output := SetFormat(repo.DeleteProduct(id))
 	fmt.Fprintln(w, string(output))
+}
+
+//---- Cart Handlers ----//
+
+func AddItemToNewCart(w http.ResponseWriter, r *http.Request) {
+
+}
+
+func AddItemToExistingCart(w http.ResponseWriter, r *http.Request) {
+
+}
+
+func GetExistingCart(w http.ResponseWriter, r *http.Request) {
+
+}
+
+func DeleteItemFromCart(w http.ResponseWriter, r *http.Request) {
+
+}
+
+//---- Payment Handlers ----//
+func GetPaymentDetails(w http.ResponseWriter, r *http.Request) {
+
+}
+
+func SetCartToPaid(w http.ResponseWriter, r *http.Request) {
+
+}
+
+func AddDiscountCode(w http.ResponseWriter, r *http.Request) {
+
 }

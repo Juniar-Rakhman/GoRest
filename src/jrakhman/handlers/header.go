@@ -25,10 +25,10 @@ func SetFormat(data interface{}) []byte {
 	return apiOutput
 }
 
-func SetDefaultHeader(w http.ResponseWriter) http.ResponseWriter {
+func SetDefaultHeader(w http.ResponseWriter, status int) {
 
 	w.Header().Set("Allow", "GET,OPTIONS")
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-
-	return w
+	w.WriteHeader(status)
 }

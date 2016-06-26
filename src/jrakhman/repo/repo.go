@@ -88,7 +88,8 @@ func DeleteProduct(id int) error {
 	checkErr(err)
 
 	_, err = stmt.Exec(id)
-	checkErr(err)
 
 	fmt.Println("deleted product id = ", id)
+
+	return err
 }

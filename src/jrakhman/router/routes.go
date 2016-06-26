@@ -47,10 +47,48 @@ var routes = Routes{
 		handlers.DelProduct,
 	},
 	//Cart Routes
-	//Route{
-	//	"NewCart",
-	//	"GET",
-	//	"/cart/{itemId}",
-	//	handlers.AddItemToNewCart,
-	//}
+	Route{
+		"GetExistingCart",
+		"GET",
+		"/cart/{cartId}",
+		handlers.GetExistingCart,
+	},
+	Route{
+		"AddItemToNewCart",
+		"POST",
+		"/cart/new",
+		handlers.AddItemToNewCart,
+	},
+	Route{
+		"AddItemToExistingCart",
+		"POST",
+		"/cart/{cartId}",
+		handlers.AddItemToExistingCart,
+	},
+	Route{
+		"DeleteItemFromCart",
+		"DELETE",
+		"/cart/{cartId}/{itemId}",
+		handlers.DeleteItemFromCart,
+	},
+	//Payment Routes
+	Route{
+		"GetPaymentDetails",
+		"GET",
+		"/payment/{cartId}",
+		handlers.GetPaymentDetails,
+	},
+	Route{
+		"SetCartToPaid",
+		"POST",
+		"/payment/{cartId}",
+		handlers.SetCartToPaid,
+	},
+	Route{
+		"AddDiscountCode",
+		"POST",
+		"/payment/{cartId}/{discountCode}",
+		handlers.AddDiscountCode,
+	},
+}
 }
