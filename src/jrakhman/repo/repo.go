@@ -238,16 +238,19 @@ func AddDiscount(cartId int, discount int) model.Cart {
 
 	c := FindCartByUser(cartId)
 
-	stmt, err := db.Prepare("update tbl_cart_payment set paid=$1 where id=$2")
+	stmt, err := db.Prepare("update tbl_cart_payment set discount=$1 where id=$2")
 	checkErr(err)
 
-	res, err := stmt.Exec(true, c.Id)
+	res, err := stmt.Exec(discount, c.Id)
 	checkErr(err)
 
 	affect, err := res.RowsAffected()
 	checkErr(err)
 
 	fmt.Println(affect, "rows changed")
+
+	//update total cost
+	CalculateTotalCost(&c, discount)
 
 	return c
 }

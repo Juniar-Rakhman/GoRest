@@ -174,28 +174,28 @@ func setup() {
 //	}
 //
 //}
-
-func TestAddItemToExistingCart(t *testing.T) {
-	setup()
-
-	method := "POST"
-	urlStr := "/cart/423"
-
-	postBody := map[string]interface{}{
-		"prodId": 2,
-		"qty": 23,
-		"price":234,
-	}
-
-	body, _ := json.Marshal(postBody)
-	req, err := http.NewRequest(method, urlStr, bytes.NewReader(body))
-	if err != nil {
-		t.Fatal("Creating " + method + " " + urlStr + " request failed!")
-	}
-	muxRouter.ServeHTTP(respRec, req)
-	t.Log("Returned Body: ", respRec.Body)
-
-	if respRec.Code != http.StatusOK {
-		t.Fatal("Server error: Returned ", respRec.Code, " instead of ", http.StatusOK)
-	}
-}
+//
+//func TestAddItemToExistingCart(t *testing.T) {
+//	setup()
+//
+//	method := "POST"
+//	urlStr := "/cart/423"
+//
+//	postBody := map[string]interface{}{
+//		"prodId": 2,
+//		"qty": 23,
+//		"price":234,
+//	}
+//
+//	body, _ := json.Marshal(postBody)
+//	req, err := http.NewRequest(method, urlStr, bytes.NewReader(body))
+//	if err != nil {
+//		t.Fatal("Creating " + method + " " + urlStr + " request failed!")
+//	}
+//	muxRouter.ServeHTTP(respRec, req)
+//	t.Log("Returned Body: ", respRec.Body)
+//
+//	if respRec.Code != http.StatusOK {
+//		t.Fatal("Server error: Returned ", respRec.Code, " instead of ", http.StatusOK)
+//	}
+//}

@@ -79,9 +79,9 @@ var routes = Routes{
 		handlers.SetCartToPaid,
 	},
 	Route{
-		"AddDiscountCode",
+		"AddDiscount",
 		"POST",
-		"/payment/{cartId}/{discountCode}",
+		"/payment/{cartId}/{disc}",
 		handlers.AddDiscount,
 	},
 }
