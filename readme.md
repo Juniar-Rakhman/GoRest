@@ -10,8 +10,9 @@ To run the app :
 - or run executable binary in bin folder
 
 To clean & fix dependencies:
-- delete folder from src/github.com/*
+- delete contents from /src/github.com/* and /pkg/*
 - run 'go get' from root directory
+- run 'go build' from root directory
 
 To run unit test : 
 - uncomment the test cases that you want to run in test/main_test.go
