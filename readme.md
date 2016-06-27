@@ -1,9 +1,9 @@
 Product Shopping cart supporting: add, remove item to cart, support for discount coupon and total purchase amount
 
 Tested environment:
-OS: MacOSX
-IDE: Intellij with Go plugins
-Go version: 1.6
+- OS: MacOSX
+- IDE: Intellij with Go plugins
+- Go version: 1.6
 
 To run the app : 
 - run 'go build' from root directory 
