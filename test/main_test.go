@@ -6,8 +6,6 @@ import (
 	"testing"
 	"jrakhman/router"
 	"github.com/gorilla/mux"
-	"encoding/json"
-	"bytes"
 )
 
 //Functional testing is covered here. For code coverage testing refer to handlers_test.go
@@ -179,7 +177,7 @@ func setup() {
 //	setup()
 //
 //	method := "POST"
-//	urlStr := "/cart/423"
+//	urlStr := "/cart/123"	//change user accordingly
 //
 //	postBody := map[string]interface{}{
 //		"prodId": 2,
@@ -204,5 +202,19 @@ func TestDeleteCartItem(t *testing.T) {
 	setup()
 
 	method := "DELETE"
+	urlStr := "/cart/item/12" //change item accordingly
 
+	req, err := http.NewRequest(method, urlStr, nil)
+	if err != nil {
+		t.Fatal("Creating " + method + " " + urlStr + " request failed!")
+	}
+
+	muxRouter.ServeHTTP(respRec, req)
+
+	t.Log("Returned Body: ", respRec.Body)
+
+	if respRec.Code != http.StatusOK {
+		t.Fatal("Server error: Returned ", respRec.Code, " instead of ", http.StatusBadRequest)
+	}
 }
+
