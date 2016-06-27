@@ -153,7 +153,7 @@ func DeleteCartItem(w http.ResponseWriter, r *http.Request) {
 //---- Payment Handlers ----//
 func SetCartToPaid(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	id, _ := strconv.Atoi(vars["cartId"])
+	id, _ := strconv.Atoi(vars["userId"])
 
 	SetDefaultHeader(w, 200)
 	output := SetFormat(repo.SetCartToPaid(id))

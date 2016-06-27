@@ -74,8 +74,8 @@ var routes = Routes{
 	//Payment Routes
 	Route{
 		"SetCartToPaid",
-		"POST",
-		"/payment/{cartId}",
+		"GET",
+		"/payment/{userId}",
 		handlers.SetCartToPaid,
 	},
 	Route{

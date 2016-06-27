@@ -133,12 +133,12 @@ func TestAddItemToNewCart(t *testing.T) {
 	setup()
 
 	method := "POST"
-	urlStr := "/cart/new/423"
+	urlStr := "/cart/new/123"
 
 	postBody := map[string]interface{}{
 		"prodId": 3,
 		"qty": 33,
-		"price":100,
+		"price":234,
 	}
 
 	body, _ := json.Marshal(postBody)
@@ -184,7 +184,7 @@ func TestAddItemToExistingCart(t *testing.T) {
 	postBody := map[string]interface{}{
 		"prodId": 2,
 		"qty": 23,
-		"price":234,
+		"price":432,
 	}
 
 	body, _ := json.Marshal(postBody)
@@ -220,3 +220,22 @@ func TestDeleteCartItem(t *testing.T) {
 	}
 }
 
+func TestSetCartToPaid(t *testing.T) {
+	setup()
+
+	method := "GET"
+	urlStr := "/payment/123" //change user accordingly
+
+	req, err := http.NewRequest(method, urlStr, nil)
+	if err != nil {
+		t.Fatal("Creating " + method + " " + urlStr + " request failed!")
+	}
+
+	muxRouter.ServeHTTP(respRec, req)
+
+	t.Log("Returned Body: ", respRec.Body)
+
+	if respRec.Code != http.StatusOK {
+		t.Fatal("Server error: Returned ", respRec.Code, " instead of ", http.StatusBadRequest)
+	}
+}
