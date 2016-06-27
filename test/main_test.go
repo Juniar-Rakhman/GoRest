@@ -154,7 +154,7 @@ func setup() {
 //	}
 //}
 //
-//func TestGetExistingCart(t *testing.T)  {
+//func TestGetExistingCartByUser(t *testing.T)  {
 //	setup()
 //
 //	method := "GET"
@@ -199,3 +199,10 @@ func setup() {
 //		t.Fatal("Server error: Returned ", respRec.Code, " instead of ", http.StatusOK)
 //	}
 //}
+
+func TestDeleteCartItem(t *testing.T) {
+	setup()
+
+	method := "DELETE"
+
+}

@@ -146,7 +146,7 @@ func DeleteCartItem(w http.ResponseWriter, r *http.Request) {
 	id, _ := strconv.Atoi(vars["itemId"])
 
 	SetDefaultHeader(w, 200)
-	output := repo.DeleteCartItem(id)
+	output := SetFormat(repo.DeleteCartItem(id))
 	fmt.Fprintln(w, string(output))
 }
 

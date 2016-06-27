@@ -162,6 +162,35 @@ func AddItemToExistingCart(userId int, ci model.CartItem) model.Cart {
 	return c
 }
 
+func FindCartById(cartId int) model.Cart {
+	db, err := sql.Open(DRIVER, URL)
+	checkErr(err)
+	defer db.Close()
+
+	c := model.Cart{}
+	cRows, err := db.Query("SELECT * FROM tbl_cart_payment where id=$1", cartId)
+	checkErr(err)
+
+	for cRows.Next() {
+		//should be only 1
+		err = cRows.Scan(&c.Id, &c.Total, &c.Discount, &c.Paid, &c.UserId)
+		checkErr(err)
+	}
+
+	ciRows, err := db.Query("SELECT * FROM tbl_cart_items where cart_id=$1", c.Id)
+	checkErr(err)
+
+	for ciRows.Next() {
+		var cart int
+		ci := model.CartItem{}
+		err = ciRows.Scan(&ci.Id, &cart, &ci.ProdId, &ci.Quantity, &ci.Price)
+		checkErr(err)
+		c.CartItems = append(c.CartItems, ci)
+	}
+
+	return c
+}
+
 func FindCartByUser(userId int) model.Cart {
 	db, err := sql.Open(DRIVER, URL)
 	checkErr(err)
@@ -191,23 +220,23 @@ func FindCartByUser(userId int) model.Cart {
 	return c
 }
 
-func DeleteCartItem(itemId int) int {
+func DeleteCartItem(itemId int) model.Cart {
 	db, err := sql.Open(DRIVER, URL)
 	checkErr(err)
 	defer db.Close()
 
-	stmt, err := db.Prepare("delete from tbl_cart_items where id=$1")
+	var cart_id int
+
+	err = db.QueryRow("delete from tbl_cart_items where id=$1 returning cart_id", itemId).Scan(&cart_id)
 	checkErr(err)
 
-	res, err := stmt.Exec(itemId)
-	checkErr(err)
+	//fetch updated cart
+	c := FindCartById(cart_id)
 
-	affect, err := res.RowsAffected()
-	checkErr(err)
+	//recalculate total cost
+	CalculateTotalCost(&c, 0)
 
-	fmt.Println(affect, "rows changed")
-
-	return itemId
+	return c
 }
 
 func SetCartToPaid(userId int) model.Cart {
@@ -215,18 +244,19 @@ func SetCartToPaid(userId int) model.Cart {
 	checkErr(err)
 	defer db.Close()
 
-	c := FindCartByUser(userId)
-
-	stmt, err := db.Prepare("update tbl_cart_payment set paid=$1 where id=$2")
+	stmt, err := db.Prepare("update tbl_cart_payment set paid=$1 where user_id=$2")
 	checkErr(err)
 
-	res, err := stmt.Exec(true, c.Id)
+	res, err := stmt.Exec(true, userId)
 	checkErr(err)
 
 	affect, err := res.RowsAffected()
 	checkErr(err)
 
 	fmt.Println(affect, "rows changed")
+
+	//fetch updated cart
+	c := FindCartByUser(userId)
 
 	return c
 }
