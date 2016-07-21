@@ -2,7 +2,7 @@ Product Shopping cart supporting: add, remove item to cart, support for discount
 
 Mandatory steps before compile / running the app:
 - Install the latest version of Go : https://golang.org/doc/install
-- set $GOPATH to project directory: export GOPATH$ = $(pwd) 
+- set $GOPATH to project directory: export GOPATH = $(pwd) 
 - $(pwd) is the project directory
 
 Please note that you might need different tools and additional config to compile and run the app on linux/windows.
